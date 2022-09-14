@@ -40,6 +40,9 @@ this.formPost.valueChanges.pipe(filter(res => res!.length > 0)
   }
 GetPost(dato:any){
   this.busqueda={dato}
+ if(dato.length==1){
+  this.busqueda={dato:' '}
+ }
   this.postService.getPost(this.busqueda).subscribe(data=>{
   this.posts=data
 })
