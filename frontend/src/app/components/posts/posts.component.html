@@ -1,0 +1,21 @@
+<p>posts works!</p>
+<div class="container">
+    <div class="search">
+        <h2>Busqueda</h2>
+
+        <label for="name">Name: </label>
+<input id="name" type="text" [formControl]="formPost">
+    </div>
+</div>
+
+<div  class="container">
+
+
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" >
+        <div class="col" *ngFor="let item of posts">
+            <app-post-card [entrada]="item" ></app-post-card>
+
+        </div>
+        
+</div>
