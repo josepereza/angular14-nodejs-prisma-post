@@ -6,9 +6,10 @@ export interface User {
 }
 
 export interface Post {
-    id:        number;
+    id?:        number;
     title:     string;
     content:   null | string;
-    published: boolean;
-    authorId:  number;
+    published?: boolean;
+    authorId?:  number;
+    authorEmail?:string;
 }

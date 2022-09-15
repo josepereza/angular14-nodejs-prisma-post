@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Post } from 'src/app/interfaces/post';
 import { PostService } from 'src/app/services/post.service';
 
@@ -18,12 +19,18 @@ import {
 export class PostsComponent implements OnInit {
 posts:Post[]=[]
 busqueda:any={}
-formPost=new FormControl('')
-  constructor(private postService:PostService) { }
+formBusqueda=new FormControl('')
 
+  constructor(private postService:PostService, private fb:FormBuilder) { }
+  postForm = this.fb.group({
+    title:[''],
+    content:[''],
+   authorEmail:['']
+
+  })
   ngOnInit(): void {
     this.GetPost('')
-this.formPost.valueChanges.pipe(filter(res => res!.length > 0)
+this.formBusqueda.valueChanges.pipe(filter(res => res!.length > 0)
 // Time in milliseconds between key events
 , debounceTime(1000)
  
@@ -46,5 +53,11 @@ GetPost(dato:any){
   this.postService.getPost(this.busqueda).subscribe(data=>{
   this.posts=data
 })
+}
+enviar(){
+  this.postService.agregarPost(this.postForm.value).subscribe(data=>{
+    console.log(data)
+  })
+  console.log(this.postForm.value)
 }
 }

@@ -1,15 +1,19 @@
-<p>posts works!</p>
+
 <div class="container">
     <div class="search">
         <h2>Busqueda</h2>
 
         <label for="name">Name: </label>
-<input id="name" type="text" [formControl]="formPost">
+<input id="name" type="text" [formControl]="formBusqueda">
     </div>
 </div>
+<div class="container titulo text-center mb-4">
+    <span style="font-size: 2.5em;margin-right: 30px;">Listado Post</span>
+    
+    <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary" style="font-size: 2.5em; background-color: blue;">+</button>
 
+</div>
 <div  class="container">
-
 
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" >
@@ -19,3 +23,44 @@
         </div>
         
 </div>
+
+
+
+<!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <form  [formGroup]="postForm" (ngSubmit)="enviar()"  >
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="title" formControlName="title">
+              </div>
+
+              <div class="mb-3">
+                <label for="content" class="form-label">Contenido</label>
+                <textarea class="form-control" id="content" rows="3" formControlName="content"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="email@gmail.com" formControlName="authorEmail">
+              </div>
+              <button  class="btn btn-primary">Send</button>
+
+        </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

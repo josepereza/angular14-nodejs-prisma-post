@@ -14,4 +14,8 @@ getPost(dato:any):Observable<Post[]>{
   return this.http.post<Post[]>('http://localhost:3000/buscar',dato)
 }
 
+agregarPost(dato:any){
+  
+  return this.http.post('http://localhost:3000/post',dato)
+}
 }

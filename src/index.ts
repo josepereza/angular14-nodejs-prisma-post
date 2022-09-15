@@ -15,7 +15,24 @@ app.use(cors(options));
 app.use(express.json());
 app.use(express.urlencoded())
 app.get('/prueba',(req,res)=>{
+  console.log('prueba bababa')
     res.send('probando')
+})
+app.post('/post', async (req, res) => {
+  const { title, content, authorEmail } = req.body
+  console.log('cago',title,content,authorEmail)
+  prisma.post.create({
+    data: {
+      title,
+      content,
+      published: false,
+      author: { connect: { email: authorEmail } },
+    },
+  }).then(data=>{
+    console.log('mis dato',data)
+        res.json(data)
+
+  })
 })
 app.get('/users',async (req,res)=>{
     const users= await prisma.user.findMany()
@@ -80,21 +97,7 @@ app.get('/feed', async (req, res) => {
     res.json(result)
   })
   
-  app.post(`/post`, async (req, res) => {
-    const { title, content, authorEmail } = req.body
-    prisma.post.create({
-      data: {
-        title,
-        content,
-        published: false,
-        author: { connect: { email: authorEmail } },
-      },
-    }).then(data=>{
-      console.log('mis dato',data)
-          res.json(data)
-
-    })
-  })
+  
 
   app.put('/post/publish/:id', async (req, res) => {
     const { id } = req.params
