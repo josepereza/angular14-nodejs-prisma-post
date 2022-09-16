@@ -12,4 +12,5 @@ export interface Post {
     published?: boolean;
     authorId?:  number;
     authorEmail?:string;
+    image_name?:string;
 }

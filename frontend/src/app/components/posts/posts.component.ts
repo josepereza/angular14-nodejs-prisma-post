@@ -17,13 +17,14 @@ import {
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
+  imageFile!: File
 posts:Post[]=[]
 busqueda:any={}
 formBusqueda=new FormControl('')
 
   constructor(private postService:PostService, private fb:FormBuilder) { }
-  postForm = this.fb.group({
-    title:[''],
+  postForm = this.fb.nonNullable.group({
+    title: [''],
     content:[''],
    authorEmail:['']
 
@@ -45,6 +46,15 @@ this.formBusqueda.valueChanges.pipe(filter(res => res!.length > 0)
 
 
   }
+
+
+  onFileSelect(event:any) {
+    console.log(event.target.files.length)
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.imageFile = file
+    }
+  }
 GetPost(dato:any){
   this.busqueda={dato}
  if(dato.length==1){
@@ -55,7 +65,14 @@ GetPost(dato:any){
 })
 }
 enviar(){
-  this.postService.agregarPost(this.postForm.value).subscribe(data=>{
+    let formData = new FormData();
+  formData.append('title', this.postForm.get('title')!.value);
+  formData.append('content', this.postForm.get('content')!.value);
+  formData.append('authorEmail', this.postForm.get('authorEmail')!.value);
+  formData.append('image',this.imageFile);
+
+
+  this.postService.agregarPost(formData).subscribe(data=>{
     console.log(data)
   })
   console.log(this.postForm.value)
