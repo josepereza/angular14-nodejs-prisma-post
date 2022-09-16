@@ -1,5 +1,7 @@
 # nodejs-blog-typescript-prisma-crud
 ## Instrucciones
+
+* Tenomos 2 branch - Uno  normal  y otro con upload 
   ### Para desarrollo ejecutamos
           
          ```
