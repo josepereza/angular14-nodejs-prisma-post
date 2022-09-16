@@ -1,5 +1,17 @@
 import { PrismaClient } from '@prisma/client'
 import express, {Request,Response,Application} from 'express';
+import path from 'path';
+import multer from 'multer';
+const tmpFolder = path.resolve(__dirname, '..', 'public/images');
+const storage = multer.diskStorage({
+  destination: function(req:any, file:any, cb:any) {
+      cb(null, tmpFolder);
+   },
+  filename: function (req:any, file:any, cb:any) {
+      cb(null , file.originalname);
+  }
+});
+const upload = multer({ storage:storage })
 import cors from 'cors';
 
 const allowedOrigins = ['http://localhost:4200'];
@@ -11,13 +23,36 @@ const options: cors.CorsOptions = {
 const prisma = new PrismaClient()
 
 const app = express()
+
+//app.use('/public',express.static(path.resolve(__dirname,'public')));
+app.use('/public',express.static(path.resolve('public')));
 app.use(cors(options));
 app.use(express.json());
 app.use(express.urlencoded())
+
 app.get('/prueba',(req,res)=>{
   console.log('prueba bababa')
     res.send('probando')
 })
+app.post('/imagen', upload.single('image'),  async (req, res) => {
+  console.log('mi rererere', req.body)
+  const { title, content, authorEmail } = req.body  
+  const usuario = {
+    title,
+    content,
+    published: false,
+    author: { connect: { email: authorEmail } },
+    image_name :' ' 
+  }
+  var file = req.file?.originalname;
+  file
+    ? (usuario.image_name= `http://localhost:3000/public/images/${file}`)
+    : (usuario.image_name =' ' );
+ 
+  let user = await prisma.post.create({ data: usuario });
+  res.json(usuario)
+})
+
 app.post('/post', async (req, res) => {
   const { title, content, authorEmail } = req.body
   console.log('cago',title,content,authorEmail)
