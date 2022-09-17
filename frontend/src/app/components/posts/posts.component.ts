@@ -73,7 +73,7 @@ enviar(){
 
 
   this.postService.agregarPost(formData).subscribe(data=>{
-    console.log(data)
+    this.GetPost('')
   })
   console.log(this.postForm.value)
 }

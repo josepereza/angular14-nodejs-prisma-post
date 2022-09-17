@@ -15,11 +15,11 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const newUser = yield prisma.user.create({
             data: {
-                name: 'Pedor',
-                email: 'Pedor@prisma.io',
+                name: 'Jose',
+                email: 'josepereza66@gmail.com',
                 posts: {
                     create: {
-                        title: 'Hello 2 World',
+                        title: 'Hello mundo 2 palabaras',
                     },
                 },
             },

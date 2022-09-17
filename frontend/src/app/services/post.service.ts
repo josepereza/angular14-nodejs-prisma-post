@@ -16,6 +16,6 @@ getPost(dato:any):Observable<Post[]>{
 
 agregarPost(dato:any){
   
-  return this.http.post('http://localhost:3000/imagen',dato)
+  return this.http.post('http://localhost:3000/postimagen',dato)
 }
 }
